@@ -5,51 +5,49 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.groceryshop.model.Consumer;
+import com.example.groceryshop.model.Customer;
 import com.example.groceryshop.model.Item;
-import com.example.groceryshop.repository.ConsumerRepository;
+import com.example.groceryshop.repository.CustomerRepository;
 import com.example.groceryshop.repository.ItemRepository;
 
 @RestController
-@CrossOrigin(origins = "*") // Allow frontend access
+@CrossOrigin(origins = "*")
 public class MainController {
 
     @Autowired
-    private ConsumerRepository consumerRepo;
+    private CustomerRepository customerRepo;
 
     @Autowired
     private ItemRepository itemRepo;
 
     @PostMapping("/register")
-    public String register(@RequestBody Consumer consumer) {
-        if (consumerRepo.findByEmail(consumer.getEmail()) != null) {
-            return "Email already exists";
-        }
-        consumerRepo.save(consumer);
-        return "Registration successful";
+    public String register(@RequestBody Customer customer) {
+        customerRepo.save(customer);
+        return "Customer registered successfully";
     }
 
-    @PostMapping("/login")
-    public String login(@RequestBody Consumer consumer) {
-        Consumer existing = consumerRepo.findByEmail(consumer.getEmail());
-        if (existing != null && existing.getPassword().equals(consumer.getPassword())) {
-            return "Login successful";
-        } else {
-            return "Invalid email or password";
-        }
-    }
-
-    @GetMapping("/items")
-    public List<Item> getItems() {
-        return itemRepo.findAll();
+    @GetMapping("/customers")
+    public List<Customer> getAllCustomers() {
+        return customerRepo.findAll();
     }
 
     @PostMapping("/items")
     public Item addItem(@RequestBody Item item) {
         return itemRepo.save(item);
+    }
+
+    @GetMapping("/items")
+    public List<Item> getAllItems() {
+        return itemRepo.findAll();
+    }
+
+    @GetMapping("/items/customer/{id}")
+    public List<Item> getItemsByCustomer(@PathVariable Long id) {
+        return itemRepo.findByCustomerCustomerId(id);
     }
 }
