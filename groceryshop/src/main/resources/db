@@ -1,0 +1,25 @@
+CREATE TABLE consumer (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255),
+  email VARCHAR(255),
+  password VARCHAR(255)
+);
+
+CREATE TABLE item (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255),
+  price DOUBLE
+);
+
+INSERT INTO item (name, price) VALUES
+('Basmati Rice (5kg)', 550.00),
+('Toor Dal (1kg)', 145.00),
+('Fortune Sunflower Oil (1L)', 130.00),
+('Aashirvaad Atta (5kg)', 280.00),
+('Tata Salt (1kg)', 25.00),
+('Parle-G Biscuits (800g)', 50.00),
+('Amul Butter (500g)', 270.00),
+('Nestle Milkmaid (400g)', 135.00),
+('Maggi Noodles (12 pack)', 144.00),
+('Britannia Cheese Slices (200g)', 110.00);
+
